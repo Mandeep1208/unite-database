@@ -1,0 +1,592 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Web_gallery_master {
+  id            String   @id @db.VarChar(50)
+  school_id     String?  @db.VarChar(50)
+  title         String?  @db.VarChar(50)
+  active        Boolean?
+  date_created  DateTime @default(now()) @db.DateTime(0)
+  date_modified DateTime @default(now()) @db.DateTime(0)
+  index         Int?     @db.TinyInt
+}
+
+model admin_master {
+  admin_id        String    @id @db.VarChar(45)
+  active          Boolean?  @default(true)
+  date_created    DateTime? @default(now()) @db.DateTime(0)
+  date_modified   DateTime? @default(now()) @db.DateTime(0)
+  password        String?   @db.VarChar(225)
+  salt            String?   @db.VarChar(225)
+  email           String?   @db.VarChar(45)
+  org_id          String?   @db.VarChar(45)
+  role            String?   @db.VarChar(100)
+  designation     String?   @db.VarChar(100)
+  fullName        String?   @db.VarChar(100)
+  contactNo       String?   @db.VarChar(50)
+  last_login_time DateTime? @db.DateTime(0)
+  location        String?   @db.VarChar(100)
+  id              String?   @db.VarChar(255)
+}
+
+model assignment_master {
+  assignment_id   String    @id @db.VarChar(255)
+  school_id       String?   @db.VarChar(255)
+  subject_id      String?   @db.VarChar(255)
+  description     String?   @db.VarChar(255)
+  submission_date DateTime? @db.DateTime(0)
+  class_id        String?   @db.VarChar(255)
+  active          Boolean?
+  teacher_id      String?   @db.VarChar(255)
+  division_id     String?   @db.VarChar(255)
+  name            String?   @db.VarChar(255)
+  date_created    DateTime  @db.DateTime(0)
+  date_modified   DateTime  @db.DateTime(0)
+}
+
+model assignment_submit_master {
+  assignment_submit_id String    @id @db.VarChar(50)
+  assignment_id        String?   @db.VarChar(50)
+  active               Int?      @db.TinyInt
+  teacher_id           String?   @db.VarChar(50)
+  complete             Int?      @db.TinyInt
+  student_id           String?   @db.VarChar(50)
+  submitted_date       DateTime? @db.Date
+  date_created         DateTime? @default(now()) @db.Timestamp(0)
+  date_modified        DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model banner_master {
+  banner_id     String    @id @db.VarChar(100)
+  active        Boolean?
+  title         String?   @db.VarChar(255)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  index         Int?
+}
+
+model board_master {
+  board_id      String    @id @db.VarChar(255)
+  boardName     String?   @db.VarChar(255)
+  active        Int?
+  date_created  DateTime? @default(now()) @db.DateTime(0)
+  date_modified DateTime? @default(now()) @db.DateTime(0)
+}
+
+model circular_master {
+  id             String    @id @db.VarChar(50)
+  circular_id    String    @db.VarChar(50)
+  active         Int?      @db.TinyInt
+  title          String?   @db.VarChar(255)
+  description    String?   @db.VarChar(255)
+  date           DateTime? @db.DateTime(0)
+  category       String?   @db.VarChar(255)
+  date_created   DateTime? @default(now()) @db.Timestamp(0)
+  date_modified  DateTime? @default(now()) @db.Timestamp(0)
+  school_id      String?   @db.VarChar(50)
+  rescheduleTime DateTime? @db.DateTime(0)
+  classArr       Json?
+}
+
+model class_division_master {
+  division_id   String    @id @db.VarChar(255)
+  divisionName  String?   @db.VarChar(255)
+  active        Int?      @default(1) @db.TinyInt
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  class_id      String?   @db.VarChar(50)
+}
+
+model class_master {
+  class_id      String    @id @db.VarChar(255)
+  className     String?   @db.VarChar(255)
+  active        Int?
+  index         Int?
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  school_id     String?   @db.VarChar(50)
+}
+
+model ebook_master {
+  id            String    @id @db.VarChar(50)
+  ebook_id      String?   @db.VarChar(50)
+  className     String?   @db.VarChar(50)
+  active        Int?      @db.TinyInt
+  title         String?   @db.VarChar(500)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  subject       String?   @db.VarChar(50)
+  index         Int?
+  success       Int?      @db.TinyInt
+}
+
+model fee_installment_master {
+  fee_id             String?   @db.VarChar(50)
+  fee_installment_id String    @id @db.VarChar(50)
+  totalFee           Float?    @db.Float
+  pendingFee         Float?    @db.Float
+  paidFee            Float?    @db.Float
+  active             Int?      @db.TinyInt
+  date_created       DateTime? @default(now()) @db.Timestamp(0)
+  date_modified      DateTime? @default(now()) @db.Timestamp(0)
+  nextPaymentDate    DateTime? @db.Date
+  paymentMethod      String?   @db.VarChar(255)
+}
+
+model fee_master {
+  fee_id          String    @id @db.VarChar(50)
+  student_id      String    @db.VarChar(50)
+  totalFee        Float     @db.Float
+  pendingFee      Float     @db.Float
+  paidFee         Float     @db.Float
+  active          Int       @db.TinyInt
+  date_created    DateTime? @default(now()) @db.Timestamp(0)
+  date_modified   DateTime? @default(now()) @db.Timestamp(0)
+  school_id       String?   @db.VarChar(50)
+  class_id        String?   @db.VarChar(50)
+  dateOfPayment   DateTime? @db.Date
+  nextPaymentDate DateTime? @db.Date
+  discountFee     Float?    @default(0) @db.Float
+  lateFee         Float?    @default(0)
+  collection_id   String?   @db.VarChar(255)
+}
+
+model handwritten_notes_master {
+  handwritten_id String    @id @db.VarChar(50)
+  teacher_id     String?   @db.VarChar(50)
+  subject_id     String?   @db.VarChar(50)
+  topic_id       String?   @db.VarChar(50)
+  division_id    String?   @db.VarChar(50)
+  chapter_id     String?   @db.VarChar(50)
+  class_id       String?   @db.VarChar(50)
+  active         Int?      @db.TinyInt
+  name           String?   @db.VarChar(200)
+  date_created   DateTime? @default(now()) @db.Timestamp(0)
+  date_modified  DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model idcard_color_master {
+  id            String   @id @db.VarChar(255)
+  school_id     String?  @db.VarChar(255)
+  color         String?  @db.VarChar(255)
+  type          String?  @db.VarChar(255)
+  template      String?  @db.VarChar(255)
+  active        Int?     @db.TinyInt
+  date_created  DateTime @default(now()) @db.DateTime(0)
+  date_modified DateTime @default(now()) @db.DateTime(0)
+}
+
+model notification_master {
+  notification_id String    @id @db.VarChar(255)
+  title           String?   @db.VarChar(255)
+  message         String?   @db.VarChar(1000)
+  seen            Int?      @db.TinyInt
+  user_id         String?   @db.VarChar(255)
+  type            String?   @db.VarChar(200)
+  date_created    DateTime? @default(now()) @db.DateTime(0)
+  date_modified   DateTime? @default(now()) @db.DateTime(0)
+  active          Int?      @db.TinyInt
+}
+
+model period_master {
+  period_id     String    @id @db.VarChar(50)
+  period        String?   @db.VarChar(50)
+  startTime     String?   @db.VarChar(50)
+  endTime       String?   @db.VarChar(50)
+  school_id     String?   @db.VarChar(50)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  active        Int?      @db.TinyInt
+}
+
+model quotes_master {
+  quotes_id     String    @id @db.VarChar(100)
+  quotes        String?   @db.VarChar(250)
+  active        Int?      @default(1)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  index         Int?
+  author        String?   @db.VarChar(100)
+}
+
+model result_master {
+  result_id     String    @id @db.VarChar(50)
+  test_id       String    @db.VarChar(50)
+  class_id      String?   @db.VarChar(50)
+  active        Boolean?
+  division_id   String?   @db.VarChar(50)
+  subject_id    String?   @db.VarChar(50)
+  student_id    String?   @db.VarChar(50)
+  obtainedMarks Float?    @db.Float
+  date_created  DateTime? @default(now()) @db.DateTime(0)
+  date_modified DateTime? @default(now()) @db.DateTime(0)
+}
+
+model school_admin_master {
+  id              String    @id @db.VarChar(255)
+  school_admin_id String?   @db.VarChar(255)
+  role            String?   @db.VarChar(255)
+  fullName        String?   @db.VarChar(255)
+  password        String?   @db.VarChar(255)
+  salt            String?   @db.VarChar(255)
+  email           String?   @db.VarChar(255)
+  org_id          String?   @db.VarChar(255)
+  designation     String?   @db.VarChar(255)
+  contactNo       String?   @db.VarChar(255)
+  active          Boolean?
+  date_created    DateTime? @default(now()) @db.Timestamp(0)
+  date_modified   DateTime? @default(now()) @db.Timestamp(0)
+  last_login_time DateTime? @db.DateTime(0)
+}
+
+model school_class_master {
+  school_class_id String    @id @db.VarChar(255)
+  school_id       String?   @db.VarChar(255)
+  active          Int?      @db.TinyInt
+  class_id        String?   @db.VarChar(255)
+  division_ids    String?   @db.VarChar(255)
+  date_created    DateTime? @default(now()) @db.Timestamp(0)
+  date_modified   DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model school_master {
+  id              String    @id @db.VarChar(100)
+  school_id       String?   @db.VarChar(100)
+  email           String?   @db.VarChar(100)
+  schoolName      String?   @db.VarChar(100)
+  active          Int?
+  address         String?   @db.Text
+  tagline         String?   @db.Text
+  contactNo       String?   @db.Text
+  locationUrl     String?   @db.Text
+  ownerName       String?   @db.Text
+  schoolBoard     String?   @db.VarChar(100)
+  password        String?   @db.VarChar(100)
+  date_created    DateTime? @default(now()) @db.Timestamp(0)
+  date_modified   DateTime? @default(now()) @db.Timestamp(0)
+  salt            String?   @db.VarChar(50)
+  last_login_time DateTime? @db.DateTime(0)
+  startDate       DateTime? @db.Date
+  endDate         DateTime? @db.Date
+  websiteURL      String?   @db.VarChar(500)
+  websiteName     String?   @db.VarChar(150)
+  medium          String?   @db.VarChar(255)
+  udiseNo         String?   @db.VarChar(255)
+  centerCodeNo    String?   @db.VarChar(255)
+  schoolRegNo     String?   @db.VarChar(255)
+}
+
+model school_subscription_master {
+  school_subscription_id String    @id @db.VarChar(50)
+  school_id              String?   @db.VarChar(50)
+  active                 Int?      @db.TinyInt
+  subscription_id        String?   @db.VarChar(50)
+  startDate              DateTime? @db.Date
+  endDate                DateTime? @db.Date
+  date_created           DateTime? @default(now()) @db.Timestamp(0)
+  date_modified          DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model student_attendance_master {
+  student_attendace_id String    @id @db.VarChar(50)
+  attendance           Boolean?
+  date                 DateTime? @default(dbgenerated("(curdate())")) @db.Date
+  class_id             String?   @db.VarChar(50)
+  division_id          String?   @db.VarChar(50)
+  active               Boolean?
+  student_id           String?   @db.VarChar(50)
+  date_created         DateTime? @default(now()) @db.DateTime(0)
+  date_modified        DateTime? @default(now()) @db.DateTime(0)
+  teacher_id           String?   @db.VarChar(50)
+}
+
+model student_documents_master {
+  student_document_id              String    @id @db.VarChar(50)
+  user_id                          String?   @db.VarChar(50)
+  transferCertificate              String?   @db.VarChar(50)
+  aadharCard                       Int?      @db.TinyInt
+  panCard                          Int?      @db.TinyInt
+  reportCard                       Int?      @db.TinyInt
+  bankPassbook                     Int?      @db.TinyInt
+  healthInsurance                  Int?      @db.TinyInt
+  medicalRecord                    Int?      @db.TinyInt
+  birthCertificate                 Int?      @db.TinyInt
+  parentsGuardianId                Int?      @db.TinyInt
+  addressProof                     Int?      @db.TinyInt
+  previousSchoolLeavingCertificate Int?      @db.TinyInt
+  previousSchoolMarksheet          Int?      @db.TinyInt
+  date_created                     DateTime? @default(now()) @db.Timestamp(0)
+  date_modified                    DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model student_master {
+  id                    String    @id @db.VarChar(50)
+  student_id            String?   @db.VarChar(50)
+  fullName              String?   @db.VarChar(50)
+  active                Int?
+  placeOfBirth          String?   @db.VarChar(255)
+  nationality           String?   @db.VarChar(50)
+  school_id             String?   @db.VarChar(50)
+  class_id              String?   @db.VarChar(50)
+  division_id           String?   @db.VarChar(50)
+  religion              String?   @db.VarChar(50)
+  contactNo             String?   @db.VarChar(50)
+  dob                   DateTime? @db.Date
+  user_id               String?   @db.VarChar(50)
+  gender                String?   @db.VarChar(50)
+  pincode               String?   @db.VarChar(50)
+  city                  String?   @db.VarChar(100)
+  state                 String?   @db.VarChar(100)
+  home                  String?   @db.VarChar(255)
+  emergencyContactNo    String?   @db.VarChar(50)
+  fatherName            String?   @db.VarChar(100)
+  fatherOccupation      String?   @db.VarChar(100)
+  motherName            String?   @db.VarChar(100)
+  guardianName          String?   @db.VarChar(100)
+  guardianContactNo     String?   @db.VarChar(50)
+  previousSchool        String?   @db.VarChar(255)
+  schoolAddress         String?   @db.VarChar(255)
+  schoolContactNo       String?   @db.VarChar(100)
+  grade                 String?   @db.VarChar(100)
+  modeOfTransportation  String?   @db.VarChar(100)
+  transportRoute        String?   @db.VarChar(200)
+  medicalCondition      String?   @db.VarChar(100)
+  allergies             String?   @db.VarChar(255)
+  familyDoctorContactNo String?   @db.VarChar(50)
+  date_created          DateTime? @default(now()) @db.Timestamp(0)
+  date_modified         DateTime? @default(now()) @db.Timestamp(0)
+  password              String?   @db.VarChar(200)
+  salt                  String?   @db.VarChar(200)
+  email                 String?   @db.VarChar(50)
+  last_login_time       DateTime? @db.DateTime(0)
+  rollNo                String?   @db.VarChar(10)
+  category              String?   @db.VarChar(50)
+  admissionNo           String?   @db.VarChar(50)
+  weight                Float?    @db.Float
+  height                Float?    @db.Float
+  bloodGroup            String?   @db.VarChar(50)
+  motherTongue          String?   @db.VarChar(50)
+  motherOccupation      String?   @db.VarChar(50)
+  guardianRelation      String?   @db.VarChar(50)
+  dietaryRequirements   String?   @db.VarChar(50)
+  className             String?   @db.VarChar(20)
+  divisionName          String?   @db.VarChar(20)
+  subCast               String?   @db.VarChar(50)
+  admissionDate         DateTime? @db.Date
+  generalRegNo          String?   @db.VarChar(255)
+  aadharNo              String?   @db.VarChar(255)
+  admissionType         String?   @db.VarChar(255)
+  apaarIdNo             String?   @db.VarChar(255)
+}
+
+model subject_master {
+  id            String    @id @db.VarChar(50)
+  subjectName   String?   @db.VarChar(100)
+  active        Int?      @db.TinyInt
+  subject_id    String?   @db.VarChar(50)
+  class_id      String?   @db.VarChar(50)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model subscription_master {
+  subscription_id String    @id @db.VarChar(50)
+  type            String?   @db.VarChar(50)
+  active          Int?
+  days            Int?
+  name            String?   @db.VarChar(100)
+  date_created    DateTime? @default(now()) @db.Timestamp(0)
+  date_modified   DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model teacher_documents_master {
+  teacher_document_id String    @id @db.VarChar(50)
+  user_id             String?   @db.VarChar(50)
+  teachingCertificate Int?      @db.TinyInt
+  aadharCard          Int?      @db.TinyInt
+  panCard             Int?      @db.TinyInt
+  voterIdCard         Int?      @db.TinyInt
+  resume              Int?      @db.TinyInt
+  bankPassbook        Int?      @db.TinyInt
+  date_created        DateTime? @default(now()) @db.Timestamp(0)
+  date_modified       DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model teacher_master {
+  teacher_id         String    @id @db.VarChar(255)
+  email              String?   @db.VarChar(255)
+  fullName           String?   @db.VarChar(255)
+  password           String?   @db.VarChar(255)
+  salt               String?   @db.VarChar(255)
+  gender             String?   @db.VarChar(50)
+  school_id          String?   @db.VarChar(255)
+  dob                String?   @db.VarChar(50)
+  contactNo          String?   @db.VarChar(50)
+  emergencyContactNo String?   @db.VarChar(50)
+  bloodGroup         String?   @db.VarChar(50)
+  higherEducation    String?   @db.VarChar(255)
+  totalExperience    String?   @db.VarChar(255)
+  experties          String?   @db.VarChar(255)
+  active             Boolean?
+  date_created       DateTime? @default(now()) @db.Timestamp(0)
+  date_modified      DateTime? @default(now()) @db.Timestamp(0)
+  user_id            String?   @db.VarChar(50)
+  last_login_time    DateTime? @db.DateTime(0)
+  idNumber           String?   @db.VarChar(50)
+  address            String?   @db.VarChar(150)
+  teacherType        String?   @db.VarChar(255)
+  className          String?   @db.VarChar(255)
+  divisionName       String?   @db.VarChar(255)
+}
+
+model teacher_time_table_master {
+  teacher_time_table_id String    @id @db.VarChar(255)
+  period_id             String?   @db.VarChar(255)
+  teacher_id            String?   @db.VarChar(255)
+  subject_id            String?   @db.VarChar(255)
+  active                Boolean?
+  class_id              String?   @db.VarChar(255)
+  division_id           String?   @db.VarChar(255)
+  date_created          DateTime? @default(now()) @db.Timestamp(0)
+  date_modified         DateTime? @default(now()) @db.Timestamp(0)
+  days                  Json?
+}
+
+model test_master {
+  test_id       String    @id @db.VarChar(50)
+  class_id      String?   @db.VarChar(50)
+  active        Boolean?
+  division_id   String?   @db.VarChar(50)
+  testName      String?   @db.VarChar(100)
+  teacher_id    String?   @db.VarChar(50)
+  testDate      DateTime? @db.Date
+  subject_id    String?   @db.VarChar(50)
+  totalMarks    Float?    @db.Float
+  minMarks      Float?    @db.Float
+  date_created  DateTime? @default(now()) @db.DateTime(0)
+  date_modified DateTime? @default(now()) @db.DateTime(0)
+}
+
+model time_table_master {
+  time_table_id String    @id @db.VarChar(50)
+  period_id     String?   @db.VarChar(50)
+  day           String?   @db.VarChar(20)
+  class_id      String?   @db.VarChar(50)
+  school_id     String?   @db.VarChar(50)
+  active        Int?      @db.TinyInt
+  division_id   String?   @db.VarChar(50)
+  teacher_id    String?   @db.VarChar(50)
+  subject_id    String?   @db.VarChar(50)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model user_master {
+  id            String    @id @db.VarChar(50)
+  userType      String?   @db.VarChar(50)
+  active        Int?
+  school_id     String?   @db.VarChar(50)
+  email         String?   @db.VarChar(50)
+  contactNo     String?   @db.VarChar(20)
+  date_created  DateTime? @default(now()) @db.Timestamp(0)
+  date_modified DateTime? @default(now()) @db.Timestamp(0)
+  password      String?   @db.VarChar(200)
+  salt          String?   @db.VarChar(200)
+}
+
+model web_contact_master {
+  id            String   @id @db.VarChar(255)
+  school_id     String?  @db.VarChar(255)
+  fullName      String?  @db.VarChar(255)
+  active        Boolean?
+  phone         String?  @db.VarChar(255)
+  address       String?  @db.VarChar(255)
+  email         String?  @db.VarChar(255)
+  message       String?  @db.VarChar(3000)
+  selectClasses Json?
+  date_created  DateTime @default(now()) @db.DateTime(0)
+  date_modified DateTime @default(now()) @db.DateTime(0)
+  city          String?  @db.VarChar(255)
+  region        String?  @db.VarChar(255)
+  country       String?  @db.VarChar(50)
+  location      Json?
+}
+
+model web_footer_master {
+  id            String   @id @db.VarChar(50)
+  school_id     String?  @db.VarChar(50)
+  schoolAddress String?  @db.VarChar(255)
+  active        Boolean?
+  contactNo     String?  @db.VarChar(25)
+  email         String?  @db.VarChar(55)
+  facebookLink  String?  @db.VarChar(255)
+  instagramLink String?  @db.VarChar(255)
+  linkedInLink  String?  @db.VarChar(255)
+  twitterLink   String?  @db.VarChar(255)
+  date_created  DateTime @default(now()) @db.DateTime(0)
+  date_modified DateTime @default(now()) @db.DateTime(0)
+}
+
+model web_hero_section {
+  id                 String    @id @db.VarChar(50)
+  school_id          String?   @db.VarChar(50)
+  schoolName         String?   @db.VarChar(100)
+  slogan             String?   @db.VarChar(1000)
+  staffCount         Int?
+  studentCount       Int?
+  active             Int?      @db.TinyInt
+  serviceSection     Json?
+  missionTitle       String?   @db.VarChar(255)
+  missionDescription String?   @db.VarChar(500)
+  visionTitle        String?   @db.VarChar(255)
+  visionDescription  String?   @db.VarChar(1000)
+  schoolBoard        String?   @db.VarChar(100)
+  date_created       DateTime? @default(now()) @db.DateTime(0)
+  date_modified      DateTime? @default(now()) @db.DateTime(0)
+  websiteName        String?   @db.VarChar(150)
+}
+
+model web_news_section_master {
+  id              String    @id @db.VarChar(255)
+  school_id       String?   @db.VarChar(255)
+  newsTitle       String?   @db.VarChar(255)
+  newsInformation String?   @db.VarChar(255)
+  newsDate        DateTime? @db.Date
+  active          Int?      @db.TinyInt
+  date_created    DateTime? @default(now()) @db.DateTime(0)
+  date_modified   DateTime? @default(now()) @db.DateTime(0)
+  index           Int?      @db.TinyInt
+}
+
+model web_review_section_master {
+  id             String    @id @db.VarChar(50)
+  school_id      String?   @db.VarChar(50)
+  reviewerName   String?   @db.VarChar(50)
+  reviewerRole   String?   @db.VarChar(50)
+  reviewerRating Int?      @db.TinyInt
+  reviewerReview String?   @db.VarChar(255)
+  active         Int?      @db.TinyInt
+  date_created   DateTime? @default(now()) @db.DateTime(0)
+  date_modified  DateTime? @default(now()) @db.DateTime(0)
+  index          Int?      @db.TinyInt
+}
+
+model web_team_master {
+  id            String   @id @db.VarChar(255)
+  school_id     String?  @db.VarChar(255)
+  fullName      String?  @db.VarChar(255)
+  active        Boolean?
+  designation   String?  @db.VarChar(255)
+  title         String?  @db.VarChar(255)
+  message       String?  @db.VarChar(255)
+  date_created  DateTime @default(now()) @db.DateTime(0)
+  date_modified DateTime @default(now()) @db.DateTime(0)
+  type          String?  @db.VarChar(20)
+  index         Int?     @db.TinyInt
+}
