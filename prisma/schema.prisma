@@ -654,3 +654,4 @@ model web_team_master {
   type          String?  @db.VarChar(20)
   index         Int?     @db.TinyInt
 }
+
