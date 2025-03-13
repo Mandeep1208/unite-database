@@ -44,7 +44,7 @@ model admin_master {
   contactNo       String?   @db.VarChar(50)
   last_login_time DateTime? @db.DateTime(0)
   location        String?   @db.VarChar(100)
-  id              String?   @db.VarChar(50)
+  id              String?   @db.VarChar(255)
 }
 
 model assignment_master {
@@ -60,6 +60,7 @@ model assignment_master {
   name            String?   @db.VarChar(255)
   date_created    DateTime  @db.DateTime(0)
   date_modified   DateTime  @db.DateTime(0)
+  type            String?   @db.VarChar(100)
 }
 
 model assignment_submit_master {
@@ -199,8 +200,8 @@ model fee_installment_master {
   date_created       DateTime? @default(now()) @db.Timestamp(0)
   date_modified      DateTime? @default(now()) @db.Timestamp(0)
   nextPaymentDate    DateTime? @db.Date
-  paymentMethod      String?   @db.VarChar(100)
-  transactionId      String?   @db.VarChar(150)
+  paymentMethod      String?   @db.VarChar(255)
+  transactionId      String?   @db.VarChar(100)
 }
 
 model fee_master {
@@ -218,7 +219,7 @@ model fee_master {
   nextPaymentDate DateTime? @db.Date
   discountFee     Float?    @default(0) @db.Float
   lateFee         Float?    @default(0)
-  collection_id   String?   @db.VarChar(100)
+  collection_id   String?   @db.VarChar(255)
 }
 
 model handwritten_notes_master {
@@ -236,14 +237,14 @@ model handwritten_notes_master {
 }
 
 model idcard_color_master {
-  id            String    @id @db.VarChar(255)
-  school_id     String?   @db.VarChar(255)
-  color         String?   @db.VarChar(255)
-  type          String?   @db.VarChar(255)
-  template      String?   @db.VarChar(255)
-  active        Int?      @db.TinyInt
-  date_created  DateTime? @default(now()) @db.DateTime(0)
-  date_modified DateTime? @default(now()) @db.DateTime(0)
+  id            String   @id @db.VarChar(255)
+  school_id     String?  @db.VarChar(255)
+  color         String?  @db.VarChar(255)
+  type          String?  @db.VarChar(255)
+  template      String?  @db.VarChar(255)
+  active        Int?     @db.TinyInt
+  date_created  DateTime @default(now()) @db.DateTime(0)
+  date_modified DateTime @default(now()) @db.DateTime(0)
 }
 
 model notification_master {
@@ -340,10 +341,14 @@ model school_master {
   endDate         DateTime? @db.Date
   websiteURL      String?   @db.VarChar(500)
   websiteName     String?   @db.VarChar(150)
-  medium          String?   @db.VarChar(100)
-  udiseNo         String?   @db.VarChar(100)
-  centerCodeNo    String?   @db.VarChar(100)
-  schoolRegNo     String?   @db.VarChar(100)
+  medium          String?   @db.VarChar(255)
+  udiseNo         String?   @db.VarChar(255)
+  centerCodeNo    String?   @db.VarChar(255)
+  schoolRegNo     String?   @db.VarChar(255)
+  type            String?   @db.VarChar(100)
+  subscription_id String?   @db.VarChar(100)
+  group_id        String?   @db.VarChar(100)
+  category        String?   @db.VarChar(100)
 }
 
 model school_subscription_master {
@@ -368,6 +373,7 @@ model student_attendance_master {
   date_created         DateTime? @default(now()) @db.DateTime(0)
   date_modified        DateTime? @default(now()) @db.DateTime(0)
   teacher_id           String?   @db.VarChar(50)
+  subject_id           String?   @db.VarChar(45)
 }
 
 model student_documents_master {
@@ -443,10 +449,10 @@ model student_master {
   divisionName          String?   @db.VarChar(20)
   subCast               String?   @db.VarChar(50)
   admissionDate         DateTime? @db.Date
-  generalRegNo          String?   @db.VarChar(100)
-  aadharNo              String?   @db.VarChar(20)
-  apaarIdNo             String?   @db.VarChar(100)
-  admissionType         String?   @db.VarChar(100)
+  generalRegNo          String?   @db.VarChar(255)
+  aadharNo              String?   @db.VarChar(255)
+  admissionType         String?   @db.VarChar(255)
+  apaarIdNo             String?   @db.VarChar(255)
 }
 
 model subject_master {
@@ -504,9 +510,9 @@ model teacher_master {
   last_login_time    DateTime? @db.DateTime(0)
   idNumber           String?   @db.VarChar(50)
   address            String?   @db.VarChar(150)
-  className          String?   @db.VarChar(100)
-  divisionName       String?   @db.VarChar(100)
-  teacherType        String?   @db.VarChar(100)
+  teacherType        String?   @db.VarChar(255)
+  className          String?   @db.VarChar(255)
+  divisionName       String?   @db.VarChar(255)
 }
 
 model teacher_time_table_master {
@@ -535,6 +541,7 @@ model test_master {
   minMarks      Float?    @db.Float
   date_created  DateTime? @default(now()) @db.DateTime(0)
   date_modified DateTime? @default(now()) @db.DateTime(0)
+  type          String?   @db.VarChar(100)
 }
 
 model time_table_master {
@@ -562,6 +569,9 @@ model user_master {
   date_modified DateTime? @default(now()) @db.Timestamp(0)
   password      String?   @db.VarChar(200)
   salt          String?   @db.VarChar(200)
+  deviceId      String?   @db.VarChar(100)
+  deviceType    String?   @db.VarChar(100)
+  fcmToken      String?   @db.VarChar(300)
 }
 
 model web_contact_master {
