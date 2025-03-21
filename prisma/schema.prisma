@@ -435,7 +435,7 @@ model student_master {
   salt                  String?   @db.VarChar(200)
   email                 String?   @db.VarChar(50)
   last_login_time       DateTime? @db.DateTime(0)
-  rollNo                String?   @db.VarChar(10)
+  rollNo                String?   @db.VarChar(45)
   category              String?   @db.VarChar(50)
   admissionNo           String?   @db.VarChar(50)
   weight                Float?    @db.Float
@@ -453,6 +453,7 @@ model student_master {
   aadharNo              String?   @db.VarChar(255)
   admissionType         String?   @db.VarChar(255)
   apaarIdNo             String?   @db.VarChar(255)
+  course                String?   @db.VarChar(100)
 }
 
 model subject_master {
@@ -663,4 +664,48 @@ model web_team_master {
   date_modified DateTime @default(now()) @db.DateTime(0)
   type          String?  @db.VarChar(20)
   index         Int?     @db.TinyInt
+}
+
+model batch_master {
+  batch_id      String    @id @db.VarChar(45)
+  active        Int?
+  class_id      String?   @db.VarChar(45)
+  division_id   String?   @db.VarChar(45)
+  student_id    String?   @db.VarChar(45)
+  school_id     String?   @db.VarChar(45)
+  date_created  DateTime? @db.DateTime(0)
+  date_modified DateTime? @db.DateTime(0)
+}
+
+model question_bank {
+  id                 String            @id @db.VarChar(45)
+  class_name         String?           @db.VarChar(45)
+  subject_name       String?           @db.VarChar(45)
+  chapter_name       String?           @db.VarChar(45)
+  question_bank_name String?           @db.VarChar(45)
+  active             Int?
+  date_created       DateTime?         @db.DateTime(0)
+  date_modified      DateTime?         @db.DateTime(0)
+  board_name         String?           @db.VarChar(45)
+  question_master    question_master[]
+}
+
+model question_master {
+  id               String         @db.VarChar(255)
+  queNo            Int
+  queText          String         @db.VarChar(255)
+  queType          String         @db.VarChar(255)
+  queImage         Int?           @db.TinyInt
+  queOptions       Json
+  ansText          String         @db.VarChar(255)
+  ansImage         String?        @db.VarChar(255)
+  queMarks         Int
+  date_created     DateTime?      @default(now()) @db.Timestamp(0)
+  date_modified    DateTime?      @default(now()) @db.Timestamp(0)
+  question_bank_id String?        @db.VarChar(45)
+  active           Int?           @db.TinyInt
+  question_bank    question_bank? @relation(fields: [question_bank_id], references: [id], onUpdate: NoAction, map: "question_master_ibfk_1")
+
+  @@id([id, queNo])
+  @@index([question_bank_id], map: "question_bank_id")
 }
